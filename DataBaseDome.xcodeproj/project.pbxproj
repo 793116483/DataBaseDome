@@ -16,6 +16,9 @@
 		F252B5931EF7C8F9008CE123 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F252B5911EF7C8F9008CE123 /* LaunchScreen.storyboard */; };
 		F252B59E1EF7C8FA008CE123 /* DataBaseDomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F252B59D1EF7C8FA008CE123 /* DataBaseDomeTests.m */; };
 		F252B5A91EF7C8FA008CE123 /* DataBaseDomeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F252B5A81EF7C8FA008CE123 /* DataBaseDomeUITests.m */; };
+		F252B5B81EF7C914008CE123 /* DataBaseHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = F252B5B71EF7C914008CE123 /* DataBaseHandle.m */; };
+		F252B5BB1EF7CD89008CE123 /* StudentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F252B5BA1EF7CD89008CE123 /* StudentEntity.m */; };
+		F2543D221EFA194C0096F563 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F2543D211EFA194C0096F563 /* libsqlite3.0.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,11 @@
 		F252B5A41EF7C8FA008CE123 /* DataBaseDomeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataBaseDomeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F252B5A81EF7C8FA008CE123 /* DataBaseDomeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataBaseDomeUITests.m; sourceTree = "<group>"; };
 		F252B5AA1EF7C8FA008CE123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F252B5B61EF7C914008CE123 /* DataBaseHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBaseHandle.h; sourceTree = "<group>"; };
+		F252B5B71EF7C914008CE123 /* DataBaseHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseHandle.m; sourceTree = "<group>"; };
+		F252B5B91EF7CD89008CE123 /* StudentEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentEntity.h; sourceTree = "<group>"; };
+		F252B5BA1EF7CD89008CE123 /* StudentEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentEntity.m; sourceTree = "<group>"; };
+		F2543D211EFA194C0096F563 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2543D221EFA194C0096F563 /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +96,7 @@
 				F252B59C1EF7C8FA008CE123 /* DataBaseDomeTests */,
 				F252B5A71EF7C8FA008CE123 /* DataBaseDomeUITests */,
 				F252B57E1EF7C8F9008CE123 /* Products */,
+				F2543D201EFA194C0096F563 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +113,10 @@
 		F252B57F1EF7C8F9008CE123 /* DataBaseDome */ = {
 			isa = PBXGroup;
 			children = (
+				F252B5B91EF7CD89008CE123 /* StudentEntity.h */,
+				F252B5BA1EF7CD89008CE123 /* StudentEntity.m */,
+				F252B5B61EF7C914008CE123 /* DataBaseHandle.h */,
+				F252B5B71EF7C914008CE123 /* DataBaseHandle.m */,
 				F252B5831EF7C8F9008CE123 /* AppDelegate.h */,
 				F252B5841EF7C8F9008CE123 /* AppDelegate.m */,
 				F252B5861EF7C8F9008CE123 /* ViewController.h */,
@@ -141,6 +155,14 @@
 				F252B5AA1EF7C8FA008CE123 /* Info.plist */,
 			);
 			path = DataBaseDomeUITests;
+			sourceTree = "<group>";
+		};
+		F2543D201EFA194C0096F563 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2543D211EFA194C0096F563 /* libsqlite3.0.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,6 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F252B5BB1EF7CD89008CE123 /* StudentEntity.m in Sources */,
+				F252B5B81EF7C914008CE123 /* DataBaseHandle.m in Sources */,
 				F252B5881EF7C8F9008CE123 /* ViewController.m in Sources */,
 				F252B5851EF7C8F9008CE123 /* AppDelegate.m in Sources */,
 				F252B5821EF7C8F9008CE123 /* main.m in Sources */,
@@ -520,6 +544,7 @@
 				F252B5AF1EF7C8FA008CE123 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F252B5B01EF7C8FA008CE123 /* Build configuration list for PBXNativeTarget "DataBaseDomeTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +553,7 @@
 				F252B5B21EF7C8FA008CE123 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F252B5B31EF7C8FA008CE123 /* Build configuration list for PBXNativeTarget "DataBaseDomeUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +562,7 @@
 				F252B5B51EF7C8FA008CE123 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

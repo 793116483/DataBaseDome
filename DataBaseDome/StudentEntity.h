@@ -10,4 +10,9 @@
 
 @interface StudentEntity : NSObject
 
+@property(nonatomic,assign)NSInteger number;
+@property(nonatomic,copy)NSString *name;
+@property(nonatomic,copy)NSString *gender;
+@property(nonatomic,assign)NSInteger age;
+
 @end
