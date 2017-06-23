@@ -29,8 +29,12 @@
 // 查询
 // 查询所有数据
 -(NSArray<StudentEntity *> *)selectAllKeyValues ;
+
 // 根据条件查询
 -(StudentEntity *)selectOneStudentByNumber:(NSInteger)number ;
+
+// 模糊查询,只要包含 likeName 内容
+-(StudentEntity *)selectOneStudentLikeName:(NSString *)likeName ;
 
 // 删除表中数据
 -(void)deleteOneStudentByNumber:(NSInteger)number ;

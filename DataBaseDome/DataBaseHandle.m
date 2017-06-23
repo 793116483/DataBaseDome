@@ -171,10 +171,9 @@ static sqlite3 * db ;
         }
     }
     
-    // 6.关闭数据库
-    [self closeDataBase];
-    // 释放
+    // 6.释放 和 关闭数据库
     sqlite3_finalize(stmt);
+    [self closeDataBase];
     
     return mArr ;
 }
@@ -215,10 +214,42 @@ static sqlite3 * db ;
         }
     }
     
-    [self closeDataBase];
     sqlite3_finalize(stmt);
+    [self closeDataBase];
     
     return entity ;
+}
+
+// 模糊查询
+-(StudentEntity *)selectOneStudentLikeName:(NSString *)likeName
+{
+    [self openDataBase];
+    
+    sqlite3_stmt * stmt = nil ;
+    StudentEntity * entit = [[StudentEntity alloc] init] ;
+    
+    NSString * sql = [NSString stringWithFormat:@"select * from StudentList where stu_name like '%%%@%%'",likeName];
+    
+    int result = sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, NULL);
+    
+    if (result == SQLITE_OK) {
+        
+        NSLog(@"可以模糊查询");
+        
+//        sqlite3_bind_text(stmt, 1, [likeName UTF8String], -1, NULL);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            entit.number = sqlite3_column_int(stmt, 0);
+            entit.name = [NSString stringWithUTF8String:(char *)sqlite3_column_text(stmt, 1)];
+            entit.gender = [NSString stringWithUTF8String:(char *)sqlite3_column_text(stmt, 2)];
+            entit.age = sqlite3_column_int(stmt, 3);
+        }
+    }
+    
+    sqlite3_finalize(stmt);
+    [self closeDataBase];
+    
+    return entit ;
 }
 
 // 删除表中的数据
@@ -260,8 +291,8 @@ static sqlite3 * db ;
         sqlite3_step(stmt);
     }
     
-    [self closeDataBase];
     sqlite3_finalize(stmt);
+    [self closeDataBase];
 }
 
 

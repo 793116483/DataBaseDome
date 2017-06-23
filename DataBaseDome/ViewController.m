@@ -50,7 +50,8 @@
     StudentEntity * selectStudent = [dataBaseHandle selectOneStudentByNumber:1000];
     StudentEntity * selectStudent2 = [dataBaseHandle selectOneStudentByNumber:1001];
     
-    
+    // 模糊查询
+    selectStudent = [dataBaseHandle selectOneStudentLikeName:@"三"];
     
     // 3.更新数据
     [dataBaseHandle updateStudentGender:@"女" byNumber:1000];
