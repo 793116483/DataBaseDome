@@ -45,16 +45,19 @@ static sqlite3 * db ;
     return dataBaseHandle ;
 }
 
+// 数据库文件存放所在的 Caches 文件夹路径
 -(NSString *)dataBasePath
 {
     return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
 }
 
+// 数据库文件路径
 -(NSString *)dataBaseFile
 {
     return [[self dataBasePath] stringByAppendingPathComponent:[self.dataBaseName stringByAppendingString:@".db"]];
 }
 
+// 打开数据库
 -(void)openDataBase
 {
     NSString * dataBaseFile = [self dataBaseFile];
@@ -71,6 +74,7 @@ static sqlite3 * db ;
     }
 }
 
+// 关闭数据库
 -(void)closeDataBase
 {
     int result = sqlite3_close(db);
@@ -89,7 +93,7 @@ static sqlite3 * db ;
     // 3.创建数据管理指针
     sqlite3_stmt * stmt = nil ;
     
-    // 4.验证数据库语句
+    // 4.验证数据库语句，
     int result = sqlite3_prepare_v2(db, [sqlStr UTF8String], -1, &stmt, NULL);
     
     if (result == SQLITE_OK) {
