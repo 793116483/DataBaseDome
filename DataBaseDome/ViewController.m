@@ -25,7 +25,7 @@
     DataBaseHandle * dataBaseHandle = [DataBaseHandle dataBaseHandle];
     
     // 添加表
-    NSArray * keys = @[@"number" , @"name" , @"gender" , @"age"];
+    NSArray * keys = @[@"number" , @"name" , @"gender" , @"age" , @"data"];
     [dataBaseHandle addTableWithName:@"Student1" keys:keys] ;
     
     // 查询所有缓存的数据
@@ -38,12 +38,15 @@
     entity.name = @"张三";
     entity.gender = @"男";
     entity.age = 20 ;
+    entity.data = [@"张三Data" dataUsingEncoding:NSUTF8StringEncoding];
     
     StudentEntity * entity2 = [[StudentEntity alloc] init];
     entity2.number = 1001 ;
     entity2.name = @"李四";
     entity2.gender = @"女";
     entity2.age = 25 ;
+    entity2.data = [@"李四Data" dataUsingEncoding:NSUTF8StringEncoding];
+
     
     [dataBaseHandle insertDataWithKeyValues:entity count:100000];
     [dataBaseHandle insertDataWithKeyValues:entity2 count:100000];

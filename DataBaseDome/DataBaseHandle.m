@@ -105,6 +105,7 @@
             @"name" : entity.name ,
             @"gender" : entity.gender ,
             @"age" : @(entity.age) ,
+            @"data": entity.data,
         };
         [messages addObject:message];
     }
@@ -183,6 +184,7 @@
         entity.name = dic[@"name"];
         entity.gender = dic[@"gender"];
         entity.age = [dic[@"age"] integerValue];
+        entity.data = [dic[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
         
         [mArr addObject:entity];
     }
@@ -239,6 +241,7 @@
     entity.name = dic[@"name"];
     entity.gender = dic[@"gender"];
     entity.age = [dic[@"age"] integerValue];
+    entity.data = [dic[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
     
     return entity ;
     
@@ -293,6 +296,7 @@
     entity.name = dic[@"name"];
     entity.gender = dic[@"gender"];
     entity.age = [dic[@"age"] integerValue];
+    entity.data = [dic[@"data"] dataUsingEncoding:NSUTF8StringEncoding];
     
     return entity ;
     
