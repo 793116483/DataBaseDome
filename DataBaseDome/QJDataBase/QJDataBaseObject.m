@@ -86,7 +86,7 @@ static sqlite3 * db = nil ;
 // 删除整个表
 -(BOOL)dropTable:(QJDataBaseTable *)table
 {
-    NSString * sql = [NSString stringWithFormat:@"drop table %@",table.name];
+    NSString * sql = [NSString stringWithFormat:@"drop table if exists %@",table.name];
     
     int result = [self stepSQLString:sql bindMessageBlock:nil resultBlock:nil];
     if (result == SQLITE_OK) {
