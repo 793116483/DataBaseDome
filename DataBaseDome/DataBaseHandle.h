@@ -26,8 +26,8 @@
 // 关闭数据库
 -(void)closeDataBase ;
 
-// 插入数据
--(void)insertDataWithKeyValues:(StudentEntity *)entity ;
+// 插入数据 , count 为插入多少次
+-(void)insertDataWithKeyValues:(StudentEntity *)entity count:(int)count;
 
 // 更新
 -(void)updateStudentGender:(NSString *)gender byNumber:(NSInteger)number ;

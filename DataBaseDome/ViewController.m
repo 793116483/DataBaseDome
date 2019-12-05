@@ -45,8 +45,8 @@
     entity2.gender = @"女";
     entity2.age = 25 ;
     
-    [dataBaseHandle insertDataWithKeyValues:entity];
-    [dataBaseHandle insertDataWithKeyValues:entity2];
+    [dataBaseHandle insertDataWithKeyValues:entity count:100000];
+    [dataBaseHandle insertDataWithKeyValues:entity2 count:100000];
 
     NSInteger count = [dataBaseHandle sqliteEffectedChangesCount];
     

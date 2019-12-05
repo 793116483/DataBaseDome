@@ -15,7 +15,7 @@
 
 @property (nonatomic , strong) QJDataBaseObject * db ;
 
-@property (nonatomic , copy) NSString * dataBaseName ;
+@property (nonatomic , copy) NSString * tableName ;
 
 @end
 
@@ -27,7 +27,7 @@
     dataBaseHandle.db = [QJDataBaseObject share] ;
     
 //    for (NSString * key in keys) {
-//        [dataBaseHandle.db addKeyWithName:key proportyType:QJSQLKeyTypeDefault toTable:[dataBaseHandle.db getTableWithName:dataBaseName]];
+//        [dataBaseHandle.db addKeyWithName:key proportyType:QJSQLKeyTypeDefault toTable:[dataBaseHandle.db getTableWithName:tableName]];
 //    }
     
 //    NSString * dataBaseFile = [dataBaseHandle dataBaseFile];
@@ -53,7 +53,7 @@
 -(BOOL)addTableWithName:(nonnull NSString *)tableName keys:(NSArray<NSString *> *)keys {
     
     // 向数据库添加表
-    self.dataBaseName = tableName ;
+    self.tableName = tableName ;
     BOOL result = [self.db addTableWithName:tableName keys:keys];
         
     return result ;
@@ -68,7 +68,7 @@
 //// 数据库文件路径
 //-(NSString *)dataBaseFile
 //{
-//    return [[DataBaseHandle dataBasePath] stringByAppendingPathComponent:[self.dataBaseName stringByAppendingString:@".db"]];
+//    return [[DataBaseHandle dataBasePath] stringByAppendingPathComponent:[self.tableName stringByAppendingString:@".db"]];
 //}
 
 // 打开数据库
@@ -96,15 +96,19 @@
 //}
 
 // 插入数据
--(void)insertDataWithKeyValues:(StudentEntity *)entity
+-(void)insertDataWithKeyValues:(StudentEntity *)entity count:(int)count
 {
-    NSDictionary * message = @{
-        @"number" : @(entity.number) ,
-        @"name" : entity.name ,
-        @"gender" : entity.gender ,
-        @"age" : @(entity.age) ,
-    };
-    [self.db insertMassage:message toTable:[self.db getTableWithName:self.dataBaseName]];
+    NSMutableArray * messages = [NSMutableArray array];
+    for (int i = 0; i<count; i++) {
+        NSDictionary * message = @{
+            @"number" : @(entity.number) ,
+            @"name" : entity.name ,
+            @"gender" : entity.gender ,
+            @"age" : @(entity.age) ,
+        };
+        [messages addObject:message];
+    }
+    [self.db insertMassages:messages toTable:[self.db getTableWithName:self.tableName]];
     
     // 1.打开数据库
 //    [self openDataBase];
@@ -143,7 +147,7 @@
 {
     NSDictionary * dataDic = @{@"gender":gender} ;
     NSDictionary * whereDic = @{@"number":@(number)} ;
-    [self.db updateMessage:dataDic toTable:[self.db getTableWithName:self.dataBaseName] where:whereDic] ;
+    [self.db updateMessage:dataDic toTable:[self.db getTableWithName:self.tableName] where:whereDic] ;
     
 //    [self openDataBase];
 //
@@ -168,9 +172,9 @@
 // 查询所有数据
 -(NSArray<StudentEntity *> *)selectAllKeyValues
 {
-    QJDataBaseTable * sqlTable = [self.db getTableWithName:self.dataBaseName] ;
+    QJDataBaseTable * sqlTable = [self.db getTableWithName:self.tableName] ;
     
-    NSArray<NSDictionary *> * resultArr = [self.db selectFromTable:sqlTable where:nil limitStartIndex:0 count:100 otherWhere:nil];
+    NSArray<NSDictionary *> * resultArr = [self.db selectFromTable:sqlTable where:nil limitStartIndex:0 count:1000000000 otherWhere:nil];
     NSMutableArray * mArr = [[NSMutableArray alloc] initWithCapacity:0];
     
     for (NSDictionary * dic in resultArr) {
@@ -222,9 +226,9 @@
 // 查询某一个满足条件的数据
 -(StudentEntity *)selectOneStudentByNumber:(NSInteger)number
 {
-    QJDataBaseTable * sqlObject = [self.db getTableWithName:self.dataBaseName] ;
+    QJDataBaseTable * sqlObject = [self.db getTableWithName:self.tableName] ;
 
-    NSDictionary * dic = [self.db selectFromTable:sqlObject where:@{@"number":@(number)} limitStartIndex:0 count:100 otherWhere:nil].firstObject;
+    NSDictionary * dic = [self.db selectFromTable:sqlObject where:@{@"number":@(number)} limitStartIndex:0 count:1 otherWhere:nil].firstObject;
     
     if (dic == nil) {
         return nil ;
@@ -280,9 +284,9 @@
 // 模糊查询
 -(StudentEntity *)selectOneStudentLikeName:(NSString *)likeName
 {
-    QJDataBaseTable * sqlObject = [self.db getTableWithName:self.dataBaseName] ;
+    QJDataBaseTable * sqlObject = [self.db getTableWithName:self.tableName] ;
 
-    NSDictionary * dic = [self.db selectFromTable:sqlObject whereLike:@{@"name":likeName}].firstObject;
+    NSDictionary * dic = [self.db selectFromTable:sqlObject whereLike:@{@"name":likeName} otherSqlStr:@"limit 1"].firstObject;
     
     StudentEntity * entity = [[StudentEntity alloc] init];
     entity.number = [dic[@"number"] integerValue];
@@ -335,7 +339,7 @@
 // 删除表中的数据
 -(void)deleteOneStudentByNumber:(NSInteger)number
 {
-    [self.db deleteFromTable:[self.db getTableWithName:self.dataBaseName] where:@{@"number":@(number)}];
+    [self.db deleteFromTable:[self.db getTableWithName:self.tableName] where:@{@"number":@(number)}];
     
 //    [self openDataBase];
 //
@@ -386,7 +390,7 @@
 // 删除整个表
 -(void)dropTable
 {
-    [self.db dropTable:[self.db getTableWithName:self.dataBaseName]];
+    [self.db dropTable:[self.db getTableWithName:self.tableName]];
     
 //    [self openDataBase];
 //
