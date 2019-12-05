@@ -22,7 +22,7 @@
 
     NSLog(@"%@",[DataBaseHandle dataBasePath]);
     
-    DataBaseHandle * dataBaseHandle = [DataBaseHandle dataBaseHandleWithDataBaseName:@"StudentDB"];
+    DataBaseHandle * dataBaseHandle = [DataBaseHandle dataBaseHandle];
     
     // 添加表
     NSArray * keys = @[@"number" , @"name" , @"gender" , @"age"];

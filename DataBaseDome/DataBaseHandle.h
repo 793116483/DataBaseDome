@@ -13,7 +13,7 @@
 
 @interface DataBaseHandle : NSObject
 
-+(instancetype)dataBaseHandleWithDataBaseName:(NSString *)dataBaseName;
++(instancetype)dataBaseHandle;
 
 /// 创建数据库表
 -(BOOL)addTableWithName:(nonnull NSString *)tableName keys:(NSArray<NSString *> *)keys ;

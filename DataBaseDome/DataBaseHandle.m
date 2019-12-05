@@ -21,7 +21,7 @@
 
 @implementation DataBaseHandle
 
-+(instancetype)dataBaseHandleWithDataBaseName:(NSString *)dataBaseName
++(instancetype)dataBaseHandle
 {
     DataBaseHandle * dataBaseHandle = [[self alloc] init];
     dataBaseHandle.db = [QJDataBaseObject share] ;
@@ -51,9 +51,12 @@
 
 /// 创建数据库表
 -(BOOL)addTableWithName:(nonnull NSString *)tableName keys:(NSArray<NSString *> *)keys {
+    
     // 向数据库添加表
     self.dataBaseName = tableName ;
-    return [self.db addTableWithName:tableName keys:keys];
+    BOOL result = [self.db addTableWithName:tableName keys:keys];
+        
+    return result ;
 }
 
 // 数据库文件存放所在的 Caches 文件夹路径

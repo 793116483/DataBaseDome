@@ -168,7 +168,12 @@ static sqlite3 * db = nil ;
             int count = sqlite3_column_count(stmt) ;
             for (int i = 0; i < count ; i++) {
                 NSString * key = [NSString stringWithUTF8String:sqlite3_column_name(stmt, i)] ;
-                entity[key] = [NSString stringWithUTF8String:sqlite3_column_text(stmt, i)] ;
+                char * text = sqlite3_column_text(stmt, i) ;
+                if (text != NULL) {
+                    entity[key] = [NSString stringWithUTF8String:text] ;
+                } else {
+                    entity[key] = @"";
+                }
             }
         }
         
@@ -220,25 +225,18 @@ static sqlite3 * db = nil ;
 
 /// 向数据库表中添加 key
 /// @param keyName key name , 不能为 ID , 因为已经设置成了主键
-/// @param keyType key 的类型
 /// @param table 数据库表
-//- (BOOL)addKeyWithName:(nullable NSString *)keyName proportyType:(QJSQLKeyType)keyType toTable:(QJDataBaseTable *)table{
-//    NSString * type = @"" ;
-//    if (keyType == QJSQLKeyTypeDefault) {
-//        type = @"text" ;
-//    } else if (keyType == QJSQLKeyTypeData) {
-//        type = @"binary" ;
-//    }
-//    
-//    NSString * sqlStr = [NSString stringWithFormat:@"alter table %@ add column (%@ %@)",table.name , keyName , type] ;
-//    
-//    BOOL result = [self stepSQLString:sqlStr bindDataBlock:nil resultBlock:nil] ;
-//    if (result) {
-//        [table.keys addObject:keyName];
-//    }
-//    
-//    return result ;
-//}
+- (BOOL)addKeyWithName:(nullable NSString *)keyName toTable:(QJDataBaseTable *)table{
+    
+    NSString * sqlStr = [NSString stringWithFormat:@"alter table %@ add column %@ text",table.name , keyName ] ;
+    
+    BOOL result = [self execSQLString:sqlStr] ;
+    if (result) {
+        [table.keys addObject:keyName];
+    }
+    
+    return result ;
+}
 
 
 /// 插入数据

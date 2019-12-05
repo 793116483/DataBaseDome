@@ -12,10 +12,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-//typedef enum {
-//    QJSQLKeyTypeDefault     , // 字符串 / 数字
-//    QJSQLKeyTypeData       , // 二进制
-//}QJSQLKeyType;
 
 @interface QJDataBaseObject : NSObject
 
@@ -39,9 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 向数据库表中添加 key
 /// @param keyName key name , 不能为 ID , 因为已经设置成了主键
-/// @param keyType key 的类型
 /// @param table 数据库表
-//- (BOOL)addKeyWithName:(nullable NSString *)keyName proportyType:(QJSQLKeyType)keyType toTable:(QJDataBaseTable *)table ;
+- (BOOL)addKeyWithName:(nullable NSString *)keyName toTable:(QJDataBaseTable *)table ;
 
 #pragma mark - 执行数据库语句
 
