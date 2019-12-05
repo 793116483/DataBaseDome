@@ -312,7 +312,7 @@ static sqlite3 * db = nil ;
     }
     // @"update StudentList set stu_gender = ? where stu_number = ?";
     NSMutableString * sqlStr = [NSMutableString stringWithFormat:@"update %@ set %@ ",table.name,keys];
-    if (where != nil) {
+    if (where.count) {
         NSMutableString * keys = [NSMutableString string];
         for (int i = 0; i < where.allKeys.count; i++) {
             NSString * key = [where.allKeys objectAtIndex:i];
