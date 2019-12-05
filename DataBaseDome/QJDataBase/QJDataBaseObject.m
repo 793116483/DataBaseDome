@@ -210,10 +210,10 @@ static sqlite3 * db = nil ;
         
         BOOL result = false;
         if ([value isKindOfClass:[NSData class]]) {
-            result = sqlite3_bind_blob(stmt, index + 1, (__bridge const void *)(value), -1, NULL) == SQLITE_OK;
-        } else {
-            result = sqlite3_bind_text(stmt, index + i, [NSString stringWithFormat:@"%@",value].UTF8String, -1, NULL) == SQLITE_OK;
+            value = [[NSString alloc] initWithData:value encoding:NSUTF8StringEncoding] ;
         }
+        result = sqlite3_bind_text(stmt, index + i, [NSString stringWithFormat:@"%@",value].UTF8String, -1, NULL) == SQLITE_OK;
+
         NSLog(result ?  @"邦定数据成功":@"邦定数据失败");
     }
 }

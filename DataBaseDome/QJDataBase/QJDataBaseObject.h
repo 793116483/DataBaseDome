@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 创建一个数据库表 添加到数据库中
 /// @param tableName 表名
-/// @param keys 表中的字段 key 名  , 字段类型都为 NSString
+/// @param keys 表中的字段 key 名  , 字段存储类型都为 NSString
 -(BOOL)addTableWithName:(nonnull NSString *)tableName keys:(NSArray<NSString *> *)keys ;
 
 /// 获取表
@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param sqlStr 数据库语句
 /// @param bindMessageBlock 邦定数据回调(即 sqlStr 中 ? 数据邦定)
 /// @param resultBlock 结果回调
--(BOOL)stepSQLString:(NSString *)sqlStr bindMessageBlock:(void(^)(sqlite3_stmt * stmt))bindMessageBlock resultBlock:(void(^)(NSArray<NSDictionary *> * result))resultBlock ;
+-(BOOL)stepSQLString:(NSString *)sqlStr bindMessageBlock:(void(^)(sqlite3_stmt * stmt))bindMessageBlock resultBlock:(void(^)(NSArray<NSDictionary<NSString * , NSString *> *> * result))resultBlock ;
 
 /// 邦定数据库语句 ? 代表 的数据
 /// @param message 需要被邦定的数据
@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 查询数据
 /// 查询数据
 /// @param sqlStr 数据库语句
-- (NSArray<NSDictionary *> *)selectWithSQLString:(NSString *)sqlStr ;
+- (NSArray<NSDictionary<NSString * , NSString *> *> *)selectWithSQLString:(NSString *)sqlStr ;
 
 /// 查询数据
 /// @param table 表
@@ -92,12 +92,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param limitStartIndex 起始个数
 /// @param length 长度
 /// @param otherWhere 其他条件
--(NSArray<NSDictionary *> *)selectFromTable:(QJDataBaseTable *)table where:(nullable NSDictionary *)where limitStartIndex:(NSUInteger)limitStartIndex count:(NSUInteger)count otherWhere:(nullable NSString *)otherWhere ;
+-(NSArray<NSDictionary<NSString * , NSString *> *> *)selectFromTable:(QJDataBaseTable *)table where:(nullable NSDictionary *)where limitStartIndex:(NSUInteger)limitStartIndex count:(NSUInteger)count otherWhere:(nullable NSString *)otherWhere ;
 
 /// 模糊查询
 /// @param table 表
 /// @param likeDic key value 模糊条件
--(NSArray<NSDictionary *> *)selectFromTable:(QJDataBaseTable *)table whereLike:(NSDictionary<NSString * , NSString *> *)likeDic ;
+-(NSArray<NSDictionary<NSString * , NSString *> *> *)selectFromTable:(QJDataBaseTable *)table whereLike:(NSDictionary<NSString * , NSString *> *)likeDic ;
 
 #pragma mark - other
 /// 中断一个长时间执行的查询语句
