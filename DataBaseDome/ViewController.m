@@ -20,8 +20,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    NSLog(@"%@",[DataBaseHandle dataBasePath]);
     
     DataBaseHandle * dataBaseHandle = [DataBaseHandle dataBaseHandleWithDataBaseName:@"StudentDB"];
+    
+    // 添加表
+    NSArray * keys = @[@"number" , @"name" , @"gender" , @"age"];
+    [dataBaseHandle addTableWithName:@"Student1" keys:keys] ;
     
     // 查询所有缓存的数据
     NSArray * allStudents = [dataBaseHandle selectAllKeyValues];
@@ -43,6 +48,8 @@
     [dataBaseHandle insertDataWithKeyValues:entity];
     [dataBaseHandle insertDataWithKeyValues:entity2];
 
+    NSInteger count = [dataBaseHandle sqliteEffectedChangesCount];
+    
     // 2.查询所有数据
     allStudents = [dataBaseHandle selectAllKeyValues];
     
@@ -61,9 +68,10 @@
     allStudents = [dataBaseHandle selectAllKeyValues];
     
     
+    NSInteger totalCount = [dataBaseHandle sqliteEffectedTolalChangesCount];
     
     [dataBaseHandle deleteOneStudentByNumber:1001];
-    
+
     // 查询所有数据
     allStudents = [dataBaseHandle selectAllKeyValues];
     

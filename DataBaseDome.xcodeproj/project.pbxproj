@@ -19,6 +19,8 @@
 		F252B5B81EF7C914008CE123 /* DataBaseHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = F252B5B71EF7C914008CE123 /* DataBaseHandle.m */; };
 		F252B5BB1EF7CD89008CE123 /* StudentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = F252B5BA1EF7CD89008CE123 /* StudentEntity.m */; };
 		F2543D221EFA194C0096F563 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F2543D211EFA194C0096F563 /* libsqlite3.0.tbd */; };
+		F2CDC5492397A13200BCF2E8 /* QJDataBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CDC5482397A13200BCF2E8 /* QJDataBaseObject.m */; };
+		F2CDC54C2397B45000BCF2E8 /* QJDataBaseTable.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CDC54B2397B45000BCF2E8 /* QJDataBaseTable.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,10 @@
 		F252B5B91EF7CD89008CE123 /* StudentEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentEntity.h; sourceTree = "<group>"; };
 		F252B5BA1EF7CD89008CE123 /* StudentEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentEntity.m; sourceTree = "<group>"; };
 		F2543D211EFA194C0096F563 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		F2CDC5472397A13200BCF2E8 /* QJDataBaseObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QJDataBaseObject.h; sourceTree = "<group>"; };
+		F2CDC5482397A13200BCF2E8 /* QJDataBaseObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QJDataBaseObject.m; sourceTree = "<group>"; };
+		F2CDC54A2397B45000BCF2E8 /* QJDataBaseTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QJDataBaseTable.h; sourceTree = "<group>"; };
+		F2CDC54B2397B45000BCF2E8 /* QJDataBaseTable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QJDataBaseTable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 		F252B57F1EF7C8F9008CE123 /* DataBaseDome */ = {
 			isa = PBXGroup;
 			children = (
+				F2CDC54623979FD500BCF2E8 /* QJDataBase */,
 				F252B5B91EF7CD89008CE123 /* StudentEntity.h */,
 				F252B5BA1EF7CD89008CE123 /* StudentEntity.m */,
 				F252B5B61EF7C914008CE123 /* DataBaseHandle.h */,
@@ -163,6 +170,17 @@
 				F2543D211EFA194C0096F563 /* libsqlite3.0.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F2CDC54623979FD500BCF2E8 /* QJDataBase */ = {
+			isa = PBXGroup;
+			children = (
+				F2CDC5472397A13200BCF2E8 /* QJDataBaseObject.h */,
+				F2CDC5482397A13200BCF2E8 /* QJDataBaseObject.m */,
+				F2CDC54A2397B45000BCF2E8 /* QJDataBaseTable.h */,
+				F2CDC54B2397B45000BCF2E8 /* QJDataBaseTable.m */,
+			);
+			path = QJDataBase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +272,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -302,6 +321,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F252B5BB1EF7CD89008CE123 /* StudentEntity.m in Sources */,
+				F2CDC5492397A13200BCF2E8 /* QJDataBaseObject.m in Sources */,
+				F2CDC54C2397B45000BCF2E8 /* QJDataBaseTable.m in Sources */,
 				F252B5B81EF7C914008CE123 /* DataBaseHandle.m in Sources */,
 				F252B5881EF7C8F9008CE123 /* ViewController.m in Sources */,
 				F252B5851EF7C8F9008CE123 /* AppDelegate.m in Sources */,
