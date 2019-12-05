@@ -61,6 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param table 表
 -(BOOL)insertMassage:(nonnull NSDictionary *)message toTable:(QJDataBaseTable *)table ;
 
+/// 插入n个模型数据
+/// @param messages 模型字典 数组
+/// @param table 表
+-(BOOL)insertMassages:(NSArray<NSDictionary *> *)messages toTable:(QJDataBaseTable *)table ;
 
 #pragma mark - 删除数据
 /// 删除表中的数据
@@ -82,6 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<NSDictionary<NSString * , NSString *> *> *)selectWithSQLString:(NSString *)sqlStr ;
 
 /// 查询数据
+///
 /// @param table 表
 /// @param where key value 条件
 /// @param limitStartIndex 起始个数
@@ -92,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 模糊查询
 /// @param table 表
 /// @param likeDic key value 模糊条件
--(NSArray<NSDictionary<NSString * , NSString *> *> *)selectFromTable:(QJDataBaseTable *)table whereLike:(NSDictionary<NSString * , NSString *> *)likeDic ;
+-(NSArray<NSDictionary<NSString * , NSString *> *> *)selectFromTable:(QJDataBaseTable *)table whereLike:(nullable NSDictionary<NSString * , NSString *> *)likeDic otherSqlStr:(nullable NSString *)otherSqlStr;
 
 #pragma mark - other
 /// 中断一个长时间执行的查询语句

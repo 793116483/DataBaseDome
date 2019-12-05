@@ -176,7 +176,6 @@ static sqlite3 * db = nil ;
                 }
             }
         }
-        
         // 7.结果 回调
         if (resultBlock) {
             resultBlock(mArr);
@@ -219,7 +218,7 @@ static sqlite3 * db = nil ;
         }
         result = sqlite3_bind_text(stmt, index + i, [NSString stringWithFormat:@"%@",value].UTF8String, -1, NULL) == SQLITE_OK;
 
-        NSLog(result ?  @"邦定数据成功":@"邦定数据失败");
+//        NSLog(result ?  @"邦定数据成功":@"邦定数据失败");
     }
 }
 
@@ -244,10 +243,27 @@ static sqlite3 * db = nil ;
 /// @param table 表
 -(BOOL)insertMassage:(nonnull NSDictionary *)message toTable:(QJDataBaseTable *)table
 {
+    if (message.count == 0) {
+        return false ;
+    }
+    return [self insertMassages:@[message] toTable:table];
+}
+
+
+/// 插入n个模型数据
+/// @param messages 模型字典 数组
+/// @param table 表
+-(BOOL)insertMassages:(NSArray<NSDictionary *> *)messages toTable:(QJDataBaseTable *)table {
+    
+    if (messages.count == 0) {
+        return false ;
+    }
+    
     // 1.打开数据库
     [self openDataBase];
     
     // 2.插入语句 insert into tableName(stu_name,stu_gender,stu_age,stu_number)values(?,?,?,?)
+    NSDictionary * message = messages.firstObject ;
     NSMutableString * keys = [NSMutableString string];
     NSMutableString * values = [NSMutableString string];
     for (int i = 0; i < message.allKeys.count; i++) {
@@ -265,7 +281,31 @@ static sqlite3 * db = nil ;
 
     // 执行
     return [self stepSQLString:sqlStr bindMessageBlock:^(sqlite3_stmt *stmt) {
-        [self bindMessage:message stmt:stmt startIndex:0];
+        
+        // 1. begin transaction , 2. commit transaction
+        
+        // (1) 开启事务 开启通道， stmt 在执行任务时不会关闭； 在插入很多数据时 更高效率
+        sqlite3_exec(db, [@"begin transaction" UTF8String], NULL, NULL, NULL) ;
+        
+        // 插入n组数据更高效
+        for (NSDictionary * message in messages) {
+            // 邦定数据
+            [self bindMessage:message stmt:stmt startIndex:0];
+            
+            // 最后一组邦定的数据 交由方法内容执行操作
+            if (message != messages.lastObject) {
+                // 因为 stepSQLString: bindMessageBlock: resultBlock: 方法内部最后会执行一次操作，所以最后一个不需要执行由内部来实现一次数据插入
+                
+                // stmt 执行了sqlite3_step 如果没有添加事务，stmt 就会关闭通道 ，所以在添加事务后，每次插入数据就无阻隔
+                sqlite3_step(stmt);
+                // 重新设置 stmt 后，使 stmt 可以继续有效使用
+                sqlite3_reset(stmt);
+            }
+        }
+        
+        // (2) 提交事务：把所有的操作添加到数据库中
+        sqlite3_exec(db, [@"commit transaction" UTF8String], NULL, NULL, NULL) ;
+        
     } resultBlock:nil];
 }
 
@@ -401,15 +441,21 @@ static sqlite3 * db = nil ;
 /// 模糊查询
 /// @param table 表
 /// @param likeDic key value 模糊条件
--(NSArray<NSDictionary *> *)selectFromTable:(QJDataBaseTable *)table whereLike:(NSDictionary<NSString * , NSString *> *)likeDic
+-(NSArray<NSDictionary *> *)selectFromTable:(QJDataBaseTable *)table whereLike:(nullable NSDictionary<NSString * , NSString *> *)likeDic otherSqlStr:(nullable NSString *)otherSqlStr
 {
-    NSMutableString * sqlStr = [NSMutableString stringWithFormat:@"select * from %@ where ",table.name];
-    for (NSString * key in likeDic.allKeys) {
-        if ([key isEqualToString:likeDic.allKeys.lastObject]) {
-            [sqlStr appendFormat:@" %@ like '%%%@%%' ",key , likeDic[key]];
-        } else {
-            [sqlStr appendFormat:@" %@ like '%%%@%%' ,",key , likeDic[key]];
+    NSMutableString * sqlStr = [NSMutableString stringWithFormat:@"select * from %@ ",table.name];
+    if (likeDic.count) {
+        [sqlStr appendString:@" where "];
+        for (NSString * key in likeDic.allKeys) {
+            if ([key isEqualToString:likeDic.allKeys.lastObject]) {
+                [sqlStr appendFormat:@" %@ like '%%%@%%' ",key , likeDic[key]];
+            } else {
+                [sqlStr appendFormat:@" %@ like '%%%@%%' ,",key , likeDic[key]];
+            }
         }
+    }
+    if (otherSqlStr.length) {
+        [sqlStr appendString:otherSqlStr];
     }
     
     __block NSArray * mArr = nil;
