@@ -304,6 +304,7 @@ static sqlite3 * db = nil ;
         }
         
         // (2) 提交事务：把所有的操作添加到数据库中
+        // 注意：如果在事务还没有提交前，想把当前的所有操作都回退，使用事务回退 rollback transaction
         sqlite3_exec(db, [@"commit transaction" UTF8String], NULL, NULL, NULL) ;
         
     } resultBlock:nil];
