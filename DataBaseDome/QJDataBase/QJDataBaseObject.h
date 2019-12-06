@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 执行SQL语句
 /// @param sqlStr 数据库语句
 /// @param bindMessageBlock 邦定数据回调(即 sqlStr 中 ? 数据邦定)
-/// @param resultBlock 结果回调
+/// @param resultBlock 只有查询的时候，结果回调 有数据
 -(BOOL)stepSQLString:(NSString *)sqlStr bindMessageBlock:(void(^)(sqlite3_stmt * stmt))bindMessageBlock resultBlock:(void(^)(NSArray<NSDictionary<NSString * , NSString *> *> * result))resultBlock ;
 
 /// 邦定数据库语句 ? 代表 的数据

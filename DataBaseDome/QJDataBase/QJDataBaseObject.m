@@ -161,18 +161,33 @@ static sqlite3 * db = nil ;
         NSMutableArray * mArr = [[NSMutableArray alloc] initWithCapacity:0];
 
         // 6.执行 数据库语句
-        while (sqlite3_step(stmt) == SQLITE_ROW) {
+        while (( result = sqlite3_step(stmt) ) == SQLITE_ROW) {
             NSMutableDictionary * entity = [[NSMutableDictionary alloc] init];
             [mArr addObject:entity];
             
             int count = sqlite3_column_count(stmt) ;
             for (int i = 0; i < count ; i++) {
                 NSString * key = [NSString stringWithUTF8String:sqlite3_column_name(stmt, i)] ;
-                char * text = sqlite3_column_text(stmt, i) ;
-                if (text != NULL) {
-                    entity[key] = [NSString stringWithUTF8String:text] ;
-                } else {
-                    entity[key] = @"";
+                
+                int type = sqlite3_column_type(stmt, i) ;
+                switch (type) {
+                case SQLITE_INTEGER:
+                        entity[key] = @(sqlite3_column_int(stmt, i)) ;
+                        break;
+                case SQLITE_FLOAT:
+                        entity[key] = @(sqlite3_column_double(stmt, i)) ;
+                        break;
+                case SQLITE_BLOB:
+                        entity[key] = (__bridge id _Nullable)(sqlite3_column_blob(stmt, i)) ;
+                        break;
+                case SQLITE_TEXT:
+                        entity[key] = [NSString stringWithUTF8String:sqlite3_column_text(stmt, i)] ;
+                        break;
+                case SQLITE_NULL:
+                        entity[key] = @"" ;
+                        break;
+                        default:
+                        break;
                 }
             }
         }
@@ -215,6 +230,8 @@ static sqlite3 * db = nil ;
         BOOL result = false;
         if ([value isKindOfClass:[NSData class]]) {
             value = [[NSString alloc] initWithData:value encoding:NSUTF8StringEncoding] ;
+        } else if ([value isKindOfClass:[NSDate class]]) {
+            value = [value description];
         }
         result = sqlite3_bind_text(stmt, index + i, [NSString stringWithFormat:@"%@",value].UTF8String, -1, NULL) == SQLITE_OK;
 
